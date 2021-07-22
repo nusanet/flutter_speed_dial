@@ -115,31 +115,46 @@ class AnimatedChild extends AnimatedWidget {
           shape: shape,
         ));
 
-    List<Widget> children = [
-      if (label != null || labelWidget != null)
+    var children = <Widget>[];
+    if (builder != null) {
+      children.add(
         ScaleTransition(
           scale: animation,
-          child: Container(
-            padding: (child == null) ? EdgeInsets.symmetric(vertical: 8) : null,
-            key: (child == null) ? btnKey : null,
-            child: buildLabel(),
+          child: GestureDetector(
+            onTap: _performAction,
+            child: builder,
           ),
         ),
-      if (child != null)
-        Container(
-          padding: childPadding,
-          height: buttonSize,
-          width: buttonSize,
-          child: (onLongPress == null)
-              ? button
-              : FittedBox(
-                  child: GestureDetector(
-                    onLongPress: () => _performAction(true),
-                    child: button,
-                  ),
-                ),
-        )
-    ];
+      );
+    } else {
+      children.addAll(
+        [
+          if (label != null || labelWidget != null)
+            ScaleTransition(
+              scale: animation,
+              child: Container(
+                padding: (child == null) ? EdgeInsets.symmetric(vertical: 8) : null,
+                key: (child == null) ? btnKey : null,
+                child: buildLabel(),
+              ),
+            ),
+          if (child != null)
+            Container(
+              padding: childPadding,
+              height: buttonSize,
+              width: buttonSize,
+              child: (onLongPress == null)
+                  ? button
+                  : FittedBox(
+                      child: GestureDetector(
+                        onLongPress: () => _performAction(true),
+                        child: button,
+                      ),
+                    ),
+            )
+        ],
+      );
+    }
 
     Widget _buildColumnOrRow(bool isColumn,
         {CrossAxisAlignment? crossAxisAlignment,
@@ -164,7 +179,7 @@ class AnimatedChild extends AnimatedWidget {
     return visible
         ? Container(
             margin: margin,
-            child: builder ?? _buildColumnOrRow(
+            child: _buildColumnOrRow(
               useColumn,
               mainAxisSize: MainAxisSize.min,
               children: switchLabelPosition ? children.reversed.toList() : children,
