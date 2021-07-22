@@ -274,6 +274,7 @@ class _SpeedDialState extends State<SpeedDial>
             foregroundColor: child.foregroundColor,
             elevation: child.elevation,
             buttonSize: widget.childrenButtonSize,
+            builder: child.builder,
             child: child.child,
             label: child.label,
             labelStyle: child.labelStyle,

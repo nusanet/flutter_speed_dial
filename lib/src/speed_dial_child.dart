@@ -21,6 +21,10 @@ class SpeedDialChild {
   /// [labelStyle] and [labelBackgroundColor] should be null
   final Widget? labelWidget;
 
+  /// If this is provided it will replace the default widget, therefore [label], [labelStyle],
+  /// [labelBackgroundColor], and [child] should be null
+  final Widget? builder;
+
   final Widget? child;
   final Color? backgroundColor;
   final Color? foregroundColor;
@@ -45,5 +49,6 @@ class SpeedDialChild {
     this.onTap,
     this.onLongPress,
     this.shape,
+    this.builder,
   });
 }

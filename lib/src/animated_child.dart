@@ -7,6 +7,7 @@ class AnimatedChild extends AnimatedWidget {
   final double? elevation;
   final double buttonSize;
   final Widget? child;
+  final Widget? builder;
   final List<BoxShadow>? labelShadow;
   final Key? btnKey;
 
@@ -37,6 +38,7 @@ class AnimatedChild extends AnimatedWidget {
     this.elevation = 6.0,
     this.buttonSize = 56.0,
     this.child,
+    this.builder,
     this.label,
     this.labelStyle,
     this.labelShadow,
@@ -84,15 +86,12 @@ class AnimatedChild extends AnimatedWidget {
           padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
           margin: childMargin,
           decoration: BoxDecoration(
-            color: labelBackgroundColor ??
-                (dark ? Colors.grey[800] : Colors.grey[50]),
+            color: labelBackgroundColor ?? (dark ? Colors.grey[800] : Colors.grey[50]),
             borderRadius: BorderRadius.all(Radius.circular(6.0)),
             boxShadow: labelShadow ??
                 [
                   BoxShadow(
-                    color: dark
-                        ? Colors.grey[900]!.withOpacity(0.7)
-                        : Colors.grey.withOpacity(0.7),
+                    color: dark ? Colors.grey[900]!.withOpacity(0.7) : Colors.grey.withOpacity(0.7),
                     offset: Offset(0.8, 0.8),
                     blurRadius: 2.4,
                   )
@@ -109,10 +108,8 @@ class AnimatedChild extends AnimatedWidget {
           key: btnKey,
           heroTag: heroTag,
           onPressed: _performAction,
-          backgroundColor:
-              backgroundColor ?? (dark ? Colors.grey[800] : Colors.grey[50]),
-          foregroundColor:
-              foregroundColor ?? (dark ? Colors.white : Colors.black),
+          backgroundColor: backgroundColor ?? (dark ? Colors.grey[800] : Colors.grey[50]),
+          foregroundColor: foregroundColor ?? (dark ? Colors.white : Colors.black),
           elevation: elevation ?? 6.0,
           child: child,
           shape: shape,
@@ -153,15 +150,13 @@ class AnimatedChild extends AnimatedWidget {
           ? Column(
               mainAxisSize: mainAxisSize ?? MainAxisSize.max,
               mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
-              crossAxisAlignment:
-                  crossAxisAlignment ?? CrossAxisAlignment.center,
+              crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
               children: children,
             )
           : Row(
               mainAxisSize: mainAxisSize ?? MainAxisSize.max,
               mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
-              crossAxisAlignment:
-                  crossAxisAlignment ?? CrossAxisAlignment.center,
+              crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
               children: children,
             );
     }
@@ -169,11 +164,10 @@ class AnimatedChild extends AnimatedWidget {
     return visible
         ? Container(
             margin: margin,
-            child: _buildColumnOrRow(
+            child: builder ?? _buildColumnOrRow(
               useColumn,
               mainAxisSize: MainAxisSize.min,
-              children:
-                  switchLabelPosition ? children.reversed.toList() : children,
+              children: switchLabelPosition ? children.reversed.toList() : children,
             ),
           )
         : Container();
